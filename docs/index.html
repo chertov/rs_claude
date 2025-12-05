@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Counter Demo - Rust + egui + WASM</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #1a1a2e;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        #loading_text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: sans-serif;
+            font-size: 24px;
+            color: #eee;
+            text-align: center;
+        }
+
+        .spinner {
+            border: 4px solid #333;
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+<link rel="modulepreload" href="/egui_counter-8ed6aa4d3e266a80.js" crossorigin="anonymous" integrity="sha384-Dzc1zFAKaXvZtcELMww3NTyWPvc5W408I/nuISXrTbxdHg8sVCumcIFtpPTE2OvB"><link rel="preload" href="/egui_counter-8ed6aa4d3e266a80_bg.wasm" crossorigin="anonymous" integrity="sha384-Qugfz/RhoulOO1aT7ZTDzccU3ZiNVZ32U3kkSTJiwv9GlPlMvU2xVNvDiD22tfOs" as="fetch" type="application/wasm"></head>
+<body>
+    <div id="loading_text">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+    <canvas id="the_canvas_id"></canvas>
+    
+<script type="module">
+import init, * as bindings from '/egui_counter-8ed6aa4d3e266a80.js';
+const wasm = await init({ module_or_path: '/egui_counter-8ed6aa4d3e266a80_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+</body>
+</html>
